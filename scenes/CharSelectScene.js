@@ -81,15 +81,15 @@ export class CharSelectScene extends Phaser.Scene {
             },
             active: () => {
                 this.nicknameText = this.add.text(160, 520, '닉네임: ', { fontFamily: "myfont", fontSize: '20px', fill: '#fff' });
+          
+                this.nicknameText.setInteractive().on('pointerdown', () => {
+                    document.getElementById('textInput').focus();
+                });
             }
         });
 
         this.textInput = document.getElementById('textInput');
         this.textInput.setAttribute('maxlength', '8');
-
-        this.nicknameText.setInteractive().on('pointerdown', () => {
-            this.textInput.focus();
-        });
 
         this.startGameListener = (event) => {
             if(event.key === 'Enter' && this.textInput.value !== '') {

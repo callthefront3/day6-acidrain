@@ -71,6 +71,9 @@ export class GameScene extends Phaser.Scene {
             },
             active: () => {
                 this.typingText = this.add.text(300, 600, '[         ]', { fontFamily: "myfont", fontSize: '20px', fill: '#fff' }).setOrigin(0.5, 0.5);
+                this.typingText.setInteractive().on('pointerdown', () => {
+                    document.getElementById('textInput').focus();
+                });
 
                 this.nicknameText = this.add.text(250, 40, this.nickname, { fontFamily: "myfont", fontSize: '20px', fill: '#fff' });
                 this.scoreText = this.add.text(250, 60, '점수: 0', { fontFamily: "myfont", fontSize: '20px', fill: '#fff' });
@@ -85,10 +88,6 @@ export class GameScene extends Phaser.Scene {
 
         this.textInput.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') this.checkTypedWord();
-        });
-
-        this.typingText.setInteractive().on('pointerdown', () => {
-            this.textInput.focus();
         });
     }
 
