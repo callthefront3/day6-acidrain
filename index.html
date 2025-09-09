@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>데이식스 팬게임 : 산성비</title>
+    <script src="js/phaser.js"></script>
+    <style>
+        @font-face {
+            font-family: 'myfont';
+            src: url('assets/DOSGothic.ttf') format('truetype');
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+        }
+
+        #game-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        #textInput {
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <input type="text" id="textInput" />
+    </div>
+    <script type="module" src="main.js"></script>
+</body>
+</html>
