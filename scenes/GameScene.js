@@ -74,7 +74,7 @@ export class GameScene extends Phaser.Scene {
                 families: ['myfont']
             },
             active: () => {
-                this.typingText = this.add.text(300, 600, '[         ]', { fontFamily: "myfont", fontSize: '20px', fill: '#fff' }).setOrigin(0.5, 0.5);
+                this.typingText = this.add.text(300, 700, '[         ]', { fontFamily: "myfont", fontSize: '40px', color: "#000000", backgroundColor: "#ffffff" }).setOrigin(0.5, 0.5);
                 this.typingText.setInteractive().on('pointerdown', () => {
                     document.getElementById('textInput').focus();
                 });
@@ -91,7 +91,10 @@ export class GameScene extends Phaser.Scene {
         this.textInput.removeAttribute('maxlength');
 
         this.textInput.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter') this.checkTypedWord();
+            if (event.key === 'Enter') {
+                this.checkTypedWord();
+                document.getElementById('textInput').blur();
+            }
         });
     }
 
