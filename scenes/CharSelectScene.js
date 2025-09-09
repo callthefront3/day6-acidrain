@@ -87,6 +87,10 @@ export class CharSelectScene extends Phaser.Scene {
         this.textInput = document.getElementById('textInput');
         this.textInput.setAttribute('maxlength', '8');
 
+        this.nicknameText.setInteractive().on('pointerdown', () => {
+            this.textInput.focus();
+        });
+
         this.startGameListener = (event) => {
             if(event.key === 'Enter' && this.textInput.value !== '') {
                 this.textInput.removeEventListener('keydown', this.startGameListener);
@@ -94,11 +98,6 @@ export class CharSelectScene extends Phaser.Scene {
             }
         };
         this.textInput.addEventListener('keydown', this.startGameListener);
-
-        this.textInput.focus();
-        document.querySelector('canvas').addEventListener('click', () => {
-            this.textInput.focus();
-        });
 
         // 게임 시작하기
         const button = this.add.image(300, 630, 'button')

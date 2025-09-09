@@ -70,7 +70,7 @@ export class GameScene extends Phaser.Scene {
                 families: ['myfont']
             },
             active: () => {
-                this.typingText = this.add.text(300, 600, '', { fontFamily: "myfont", fontSize: '20px', fill: '#fff' }).setOrigin(0.5, 0.5);
+                this.typingText = this.add.text(300, 600, '[         ]', { fontFamily: "myfont", fontSize: '20px', fill: '#fff' }).setOrigin(0.5, 0.5);
 
                 this.nicknameText = this.add.text(250, 40, this.nickname, { fontFamily: "myfont", fontSize: '20px', fill: '#fff' });
                 this.scoreText = this.add.text(250, 60, '점수: 0', { fontFamily: "myfont", fontSize: '20px', fill: '#fff' });
@@ -87,9 +87,8 @@ export class GameScene extends Phaser.Scene {
             if (event.key === 'Enter') this.checkTypedWord();
         });
 
-        this.textInput.focus();
-        document.querySelector('canvas').addEventListener('click', () => {
-            this.textInput.focus(); 
+        this.typingText.setInteractive().on('pointerdown', () => {
+            this.textInput.focus();
         });
     }
 
@@ -98,7 +97,9 @@ export class GameScene extends Phaser.Scene {
         this.levelTimer += delta;
 
         if (this.typingText) {
-            this.typingText.setText(this.textInput.value);
+            this.typingText.setText(`[ ${this.textInput.value} ]`);
+        } else {
+            this.typingText.setText('[         ]');
         }
         
         const spawnLimit = Math.min(2 + this.level, 10);
