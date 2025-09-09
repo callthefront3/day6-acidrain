@@ -45,7 +45,11 @@ export class GameScene extends Phaser.Scene {
         });
         
         // 배경
-        this.add.image(300, 400, 'background');
+        this.add.image(300, 400, 'background')
+                .setInteractive()
+                .on('pointerdown', () => {
+                    document.getElementById('textInput').blur();
+                });
 
         // 얼굴 스프라이트
         const portrait_key = 'face' + this.character;

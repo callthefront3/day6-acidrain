@@ -27,7 +27,11 @@ export class CharSelectScene extends Phaser.Scene {
     create() {
         // 배경
         this.add.image(300, 400, 'background');
-        this.add.image(300, 400, 'window_big');
+        this.add.image(300, 400, 'window_big')
+                .setInteractive()
+                .on('pointerdown', () => {
+                    document.getElementById('textInput').blur();
+                });
 
         // 캐릭터 선택
         this.portraits = this.add.group({ classType: Phaser.GameObjects.Sprite });
