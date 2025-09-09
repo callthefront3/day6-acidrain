@@ -4,9 +4,10 @@ export class CharSelectScene extends Phaser.Scene {
 
         this.nickname = '';
         this.character = 1;
-
+        
         this.portraits = null;
         this.textInput = null;
+        this.nicknameText = null;
 
         this.startGameListener = null;
     }
