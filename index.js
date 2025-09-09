@@ -15,23 +15,6 @@ const DB_PATH = "./score.db";
 app.use(express.static(__dirname));
 app.use(express.json());
 
-// 1. 서버 시작 시 Git pull
-try {
-  if (fs.existsSync(DB_PATH)) {
-    console.log("DB 파일 존재 → git pull");
-    execSync("git pull origin main", { stdio: "inherit" });
-  } else {
-    console.log("DB 없음 → clone 후 복사");
-    execSync("git clone https://github.com/callthefront3/day6-acidrain.git temp-repo", {
-      stdio: "inherit",
-    });
-    fs.copyFileSync("./temp-repo/score.db", DB_PATH);
-    fs.rmSync("./temp-repo", { recursive: true, force: true });
-  }
-} catch (err) {
-  console.error("Git에서 DB 가져오기 실패:", err);
-}
-
 // Database
 let db;
 (async () => {
