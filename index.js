@@ -123,10 +123,16 @@ function backupDB() {
     execSync("git add score.db", { stdio: "inherit", shell: true });
 
     const kstTime = getKSTISOString();
-    execSync(`git commit -m "backup: ${kstTime}"`, {
-      stdio: "inherit",
-      shell: true,
-    });
+
+    // 변경 사항이 있을 때만 커밋
+    try {
+      execSync(`git commit -m "backup: ${kstTime}"`, {
+        stdio: "inherit",
+        shell: true,
+      });
+    } catch (err) {
+      console.log("변경된 내용 없음 → 커밋 스킵");
+    }
 
     execSync("git push origin main", { stdio: "inherit", shell: true });
     console.log("DB 백업 완료");
@@ -136,5 +142,5 @@ function backupDB() {
 }
 
 // 하루 1회 (24시간 간격)
-// setInterval(backupDB, 24 * 60 * 60 * 1000);
-setInterval(backupDB, 60 * 1000);
+setInterval(backupDB, 24 * 60 * 60 * 1000);
+// setInterval(backupDB, 60 * 1000);
