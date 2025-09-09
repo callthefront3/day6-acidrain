@@ -53,8 +53,8 @@ export class ScoreBoardScene extends Phaser.Scene {
 
                 // 내 점수
                 this.add.sprite(160, 550, 'face' + this.character).setScale(0.2);
-                this.add.text(200, 550, this.nickname, { fontFamily: "myfont", fontSize: '20px', fill: '#fff' }).setOrigin(0, 0.5);
-                this.add.text(450, 550, this.score, { fontFamily: "myfont", fontSize: '20px', fill: '#fff' }).setOrigin(1, 0.5);
+                this.add.text(200, 550, this.nickname, { fontFamily: "myfont", fontSize: '20px', fill: '#2c21fdff' }).setOrigin(0, 0.5);
+                this.add.text(450, 550, this.score, { fontFamily: "myfont", fontSize: '20px', fill: '#2c21fdff' }).setOrigin(1, 0.5);
             }
         });
     }
