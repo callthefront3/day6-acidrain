@@ -93,7 +93,6 @@ export class GameScene extends Phaser.Scene {
         this.textInput.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
                 this.checkTypedWord();
-                this.inputUnFocused();
             }
         });
     }
