@@ -146,13 +146,11 @@ export class CharSelectScene extends Phaser.Scene {
 
     inputFocused() {
         document.getElementById('textInput').focus();
-        this.nicknameText.style.color = '#000';
-        this.nicknameText.style.color = '#fff';
+        this.nicknameText.setStyle({ color: '#000', backgroundColor: '#fff' });
     }
 
     inputUnFocused() {
         document.getElementById('textInput').blur();
-        this.nicknameText.style.color = '#fff';
-        this.nicknameText.style.color = null;
+        this.nicknameText.setStyle({ color: '#fff', backgroundColor: null });
     }
 }
