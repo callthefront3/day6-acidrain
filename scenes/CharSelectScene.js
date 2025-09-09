@@ -28,14 +28,10 @@ export class CharSelectScene extends Phaser.Scene {
         // 배경
         this.add.image(300, 400, 'background')
                 .setInteractive()
-                .on('pointerdown', () => {
-                    document.getElementById('textInput').blur();
-                });
+                .on('pointerdown', this.inputUnFocused);
         this.add.image(300, 400, 'window_big')
                 .setInteractive()
-                .on('pointerdown', () => {
-                    document.getElementById('textInput').blur();
-                });
+                .on('pointerdown', this.inputUnFocused);
 
         // 캐릭터 선택
         this.portraits = this.add.group({ classType: Phaser.GameObjects.Sprite });
@@ -47,6 +43,7 @@ export class CharSelectScene extends Phaser.Scene {
                 .on('pointerdown', () => {
                     this.character = 1;
                     this.portraitSelected();
+                    this.inputUnFocused();
                 })
         );
 
@@ -57,6 +54,7 @@ export class CharSelectScene extends Phaser.Scene {
                 .on('pointerdown', () => {
                     this.character = 2;
                     this.portraitSelected();
+                    this.inputUnFocused();
                 })
         );
 
@@ -67,6 +65,7 @@ export class CharSelectScene extends Phaser.Scene {
                 .on('pointerdown', () => {
                     this.character = 3;
                     this.portraitSelected();
+                    this.inputUnFocused();
                 })
         );
 
@@ -77,6 +76,7 @@ export class CharSelectScene extends Phaser.Scene {
                 .on('pointerdown', () => {
                     this.character = 4;
                     this.portraitSelected();
+                    this.inputUnFocused();
                 })
         );
 
@@ -88,11 +88,9 @@ export class CharSelectScene extends Phaser.Scene {
                 families: ['myfont']
             },
             active: () => {
-                this.nicknameText = this.add.text(160, 520, '닉네임: ', { fontFamily: "myfont", fontSize: '20px', fill: '#fff' });
+                this.nicknameText = this.add.text(160, 520, '닉네임: ', { fontFamily: "myfont", fontSize: '20px', color: '#fff' });
           
-                this.nicknameText.setInteractive().on('pointerdown', () => {
-                    document.getElementById('textInput').focus();
-                });
+                this.nicknameText.setInteractive().on('pointerdown', this.inputFocused);
             }
         });
 
@@ -143,6 +141,17 @@ export class CharSelectScene extends Phaser.Scene {
 
         this.portraits.getChildren().forEach(p => p.setAlpha(alpha_05));
         this.portraits.getChildren()[this.character - 1].setAlpha(1.0);
+    }
+
+    inputFocused() {
+        document.getElementById('textInput').focus();
+        this.nicknameText.style.color = '#000';
+        this.nicknameText.style.color = '#fff';
+    }
+
+    inputUnFocused() {
         document.getElementById('textInput').blur();
+        this.nicknameText.style.color = '#fff';
+        this.nicknameText.style.color = null;
     }
 }

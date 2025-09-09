@@ -47,9 +47,7 @@ export class GameScene extends Phaser.Scene {
         // 배경
         this.add.image(300, 400, 'background')
                 .setInteractive()
-                .on('pointerdown', () => {
-                    document.getElementById('textInput').blur();
-                });
+                .on('pointerdown', this.inputUnFocused);
 
         // 얼굴 스프라이트
         const portrait_key = 'face' + this.character;
@@ -74,10 +72,8 @@ export class GameScene extends Phaser.Scene {
                 families: ['myfont']
             },
             active: () => {
-                this.typingText = this.add.text(300, 700, '[         ]', { fontFamily: "myfont", fontSize: '40px', color: "#000000", backgroundColor: "#ffffff" }).setOrigin(0.5, 0.5);
-                this.typingText.setInteractive().on('pointerdown', () => {
-                    document.getElementById('textInput').focus();
-                });
+                this.typingText = this.add.text(300, 700, '[         ]', { fontFamily: "myfont", fontSize: '40px', color: '#fff' }).setOrigin(0.5, 0.5);
+                this.typingText.setInteractive().on('pointerdown', this.inputFocused);
 
                 this.nicknameText = this.add.text(250, 40, this.nickname, { fontFamily: "myfont", fontSize: '20px', fill: '#fff' });
                 this.scoreText = this.add.text(250, 60, '점수: 0', { fontFamily: "myfont", fontSize: '20px', fill: '#fff' });
@@ -93,7 +89,7 @@ export class GameScene extends Phaser.Scene {
         this.textInput.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
                 this.checkTypedWord();
-                document.getElementById('textInput').blur();
+                this.inputUnFocused();
             }
         });
     }
@@ -127,6 +123,18 @@ export class GameScene extends Phaser.Scene {
             this.level += 1;
             this.levelTimer = 0;
         }
+    }
+
+    inputFocused() {
+        document.getElementById('textInput').focus();
+        this.typingText.style.color = '#000';
+        this.typingText.style.color = '#fff';
+    }
+
+    inputUnFocused() {
+        document.getElementById('textInput').blur();
+        this.typingText.style.color = '#fff';
+        this.typingText.style.color = null;
     }
 
     spawnRain() {
