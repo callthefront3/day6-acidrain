@@ -47,7 +47,9 @@ export class GameScene extends Phaser.Scene {
         // 배경
         this.add.image(300, 400, 'background')
                 .setInteractive()
-                .on('pointerdown', this.inputUnFocused);
+                .on('pointerdown', () => {
+                    this.inputUnFocused();
+                });
 
         // 얼굴 스프라이트
         const portrait_key = 'face' + this.character;
@@ -73,7 +75,9 @@ export class GameScene extends Phaser.Scene {
             },
             active: () => {
                 this.typingText = this.add.text(300, 700, '[         ]', { fontFamily: "myfont", fontSize: '40px', color: '#fff' }).setOrigin(0.5, 0.5);
-                this.typingText.setInteractive().on('pointerdown', this.inputFocused);
+                this.typingText.setInteractive().on('pointerdown', () => {
+                    this.inputFocused();
+                });
 
                 this.nicknameText = this.add.text(250, 40, this.nickname, { fontFamily: "myfont", fontSize: '20px', fill: '#fff' });
                 this.scoreText = this.add.text(250, 60, '점수: 0', { fontFamily: "myfont", fontSize: '20px', fill: '#fff' });

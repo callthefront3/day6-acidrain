@@ -29,10 +29,14 @@ export class CharSelectScene extends Phaser.Scene {
         // 배경
         this.add.image(300, 400, 'background')
                 .setInteractive()
-                .on('pointerdown', this.inputUnFocused);
+                .on('pointerdown', () => {
+                    this.inputUnFocused();
+                });
         this.add.image(300, 400, 'window_big')
                 .setInteractive()
-                .on('pointerdown', this.inputUnFocused);
+                .on('pointerdown', () => {
+                    this.inputUnFocused();
+                });
 
         // 캐릭터 선택
         this.portraits = this.add.group({ classType: Phaser.GameObjects.Sprite });
@@ -91,7 +95,9 @@ export class CharSelectScene extends Phaser.Scene {
             active: () => {
                 this.nicknameText = this.add.text(160, 520, '닉네임: ', { fontFamily: "myfont", fontSize: '20px', color: '#fff' });
           
-                this.nicknameText.setInteractive().on('pointerdown', this.inputFocused);
+                this.nicknameText.setInteractive().on('pointerdown', () => {
+                    this.inputFocused();
+                });
             }
         });
 
