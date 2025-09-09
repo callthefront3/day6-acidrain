@@ -37,7 +37,8 @@ export class ScoreBoardScene extends Phaser.Scene {
             active: async () => {
                 let top10 = [];
                 try {
-                    const res = await fetch("http://localhost:3000/daily-rank-korea");
+                    const baseUrl = `${window.location.protocol}//${window.location.host}`;
+                    const res = await fetch(`${baseUrl}/daily-rank-korea`);
                     top10 = await res.json();
                 } catch (err) {
                     console.error("Failed to fetch Top10:", err);

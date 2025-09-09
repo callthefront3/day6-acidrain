@@ -190,7 +190,8 @@ export class GameScene extends Phaser.Scene {
     }
 
     gameOver() {
-        fetch("http://localhost:3000/submit-score", {
+        const baseUrl = `${window.location.protocol}//${window.location.host}`;
+        fetch(`${baseUrl}/submit-score`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
