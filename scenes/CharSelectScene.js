@@ -26,7 +26,11 @@ export class CharSelectScene extends Phaser.Scene {
 
     create() {
         // 배경
-        this.add.image(300, 400, 'background');
+        this.add.image(300, 400, 'background')
+                .setInteractive()
+                .on('pointerdown', () => {
+                    document.getElementById('textInput').blur();
+                });
         this.add.image(300, 400, 'window_big')
                 .setInteractive()
                 .on('pointerdown', () => {
@@ -139,5 +143,6 @@ export class CharSelectScene extends Phaser.Scene {
 
         this.portraits.getChildren().forEach(p => p.setAlpha(alpha_05));
         this.portraits.getChildren()[this.character - 1].setAlpha(1.0);
+        document.getElementById('textInput').blur();
     }
 }
