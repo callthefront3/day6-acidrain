@@ -131,12 +131,12 @@ export class GameScene extends Phaser.Scene {
 
     inputFocused() {
         document.getElementById('textInput').focus();
-        this.nicknameText.setStyle({ color: '#000', backgroundColor: '#fff' });
+        this.typingText.setStyle({ color: '#000', backgroundColor: '#fff' });
     }
 
     inputUnFocused() {
         document.getElementById('textInput').blur();
-        this.nicknameText.setStyle({ color: '#fff', backgroundColor: '' });
+        this.typingText.setStyle({ color: '#fff', backgroundColor: '' });
     }
 
     spawnRain() {
