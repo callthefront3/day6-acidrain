@@ -7,7 +7,6 @@ export class CharSelectScene extends Phaser.Scene {
         
         this.portraits = null;
         this.textInput = null;
-        this.nicknameText = null;
 
         this.startGameListener = null;
     }
@@ -28,135 +27,84 @@ export class CharSelectScene extends Phaser.Scene {
     create() {
         // 배경
         this.add.image(300, 400, 'background')
-                .setInteractive()
-                .on('pointerdown', () => {
-                    this.inputUnFocused();
-                });
+            .setInteractive();
+
         this.add.image(300, 400, 'window_big')
-                .setInteractive()
-                .on('pointerdown', () => {
-                    this.inputUnFocused();
-                });
+            .setInteractive();
 
         // 캐릭터 선택
         this.portraits = this.add.group({ classType: Phaser.GameObjects.Sprite });
 
-        this.portraits.add(
-            this.add.sprite(200, 200, 'face1')
-                .setScale(0.9)
-                .setInteractive()
-                .on('pointerdown', () => {
-                    this.character = 1;
-                    this.portraitSelected();
-                    this.inputUnFocused();
-                })
-        );
+        const centerX = 300;
+        const centerY = 300;
+        const offsetX = 100;
+        const offsetY = 100;
 
-        this.portraits.add(
-            this.add.sprite(400, 200, 'face2')
-                .setScale(0.9)
-                .setInteractive()
-                .on('pointerdown', () => {
-                    this.character = 2;
-                    this.portraitSelected();
-                    this.inputUnFocused();
-                })
-        );
+        const positions = [
+            [centerX - offsetX, centerY - offsetY],
+            [centerX + offsetX, centerY - offsetY],
+            [centerX - offsetX, centerY + offsetY],
+            [centerX + offsetX, centerY + offsetY]
+        ];
 
-        this.portraits.add(
-            this.add.sprite(200, 400, 'face3')
-                .setScale(0.9)
+        ['face1', 'face2', 'face3', 'face4'].forEach((face, i) => {
+            const [x, y] = positions[i];
+            const sprite = this.add.sprite(x, y, face)
                 .setInteractive()
                 .on('pointerdown', () => {
-                    this.character = 3;
+                    this.character = i + 1;
                     this.portraitSelected();
-                    this.inputUnFocused();
-                })
-        );
-
-        this.portraits.add(
-            this.add.sprite(400, 400, 'face4')
-                .setScale(0.9)
-                .setInteractive()
-                .on('pointerdown', () => {
-                    this.character = 4;
-                    this.portraitSelected();
-                    this.inputUnFocused();
-                })
-        );
+                });
+            this.portraits.add(sprite);
+        });
 
         this.portraitSelected();
 
         // 닉네임 입력
-        WebFont.load({
-            custom: {
-                families: ['myfont']
-            },
-            active: () => {
-                this.nicknameText = this.add.text(160, 520, '닉네임: ', { fontFamily: "myfont", fontSize: '20px', color: '#fff' });
-          
-                this.nicknameText.setInteractive().on('pointerdown', () => {
-                    this.inputFocused();
-                });
-            }
-        });
-
         this.textInput = document.getElementById('textInput');
         this.textInput.setAttribute('maxlength', '8');
 
         this.startGameListener = (event) => {
-            if(event.key === 'Enter' && this.textInput.value !== '') {
+            if (event.key === 'Enter' && this.textInput.value !== '') {
                 this.textInput.removeEventListener('keydown', this.startGameListener);
                 this.scene.start('GameScene', { nickname: this.textInput.value, character: this.character });
             }
         };
         this.textInput.addEventListener('keydown', this.startGameListener);
 
-        // 게임 시작하기
+        // 게임 시작하기 버튼
         const button = this.add.image(300, 630, 'button')
             .setInteractive()
             .on('pointerover', () => {
-                button.setScale(1.1);       // 10% 확대
-                button.setTint(0xdddddd);   // 살짝 밝게
+                button.setScale(1.1);
+                button.setTint(0xdddddd);
             })
             .on('pointerout', () => {
-                button.setScale(1);         // 원래 크기로
-                button.clearTint();         // 원래 색으로
+                button.setScale(1);
+                button.clearTint();
             })
             .on('pointerdown', () => {
-                if(this.textInput.value !== '') {
+                if (this.textInput.value !== '') {
                     this.textInput.removeEventListener('keydown', this.startGameListener);
-                    this.scene.start('GameScene', { 'nickname': this.textInput.value, 'character': this.character });
+                    this.scene.start('GameScene', { nickname: this.textInput.value, character: this.character });
                 }
             });
-
-        
     }
 
-    update(time, delta) {
-        if (this.nicknameText) {
-            if(this.textInput.value !== '') {
-                this.nicknameText.setText('닉네임: ' + this.textInput.value);
-            } else {
-                this.nicknameText.setText('닉네임: 닉네임을 입력하세요' + this.textInput.value);
-            }
-        }
+    update() {
+
     }
 
     portraitSelected() {
-        const alpha_05 = 0.5;
-
-        this.portraits.getChildren().forEach(p => p.setAlpha(alpha_05));
+        this.portraits.getChildren().forEach(p => p.setAlpha(0.5));
         this.portraits.getChildren()[this.character - 1].setAlpha(1.0);
     }
 
     inputFocused() {
         document.getElementById('textInput').focus();
-        this.nicknameText.setStyle({ color: '#000', backgroundColor: '#fff' });
     }
 
     inputUnFocused() {
         document.getElementById('textInput').blur();
-        this.nicknameText.setStyle({ color: '#fff', backgroundColor: '' });
     }
 }
