@@ -29,16 +29,16 @@
         }
 
         #textInput {
-            position: absolute;
-            left: -9999px;
-            top: -9999px;
-            opacity: 0;
+            position: fixed;
+            left: 50%;
+            bottom: 120px;
+            transform: translateX( -50% );
         }
     </style>
 </head>
 <body>
     <div id="game-container">
-        <input type="text" id="textInput" />
+        <input type="text" id="textInput" placeholder="입력해 주세요"/>
     </div>
     <script type="module" src="game.js"></script>
 </body>
