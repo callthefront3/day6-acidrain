@@ -99,12 +99,4 @@ export class CharSelectScene extends Phaser.Scene {
         this.portraits.getChildren().forEach(p => p.setAlpha(0.5));
         this.portraits.getChildren()[this.character - 1].setAlpha(1.0);
     }
-
-    inputFocused() {
-        document.getElementById('textInput').focus();
-    }
-
-    inputUnFocused() {
-        document.getElementById('textInput').blur();
-    }
 }

@@ -113,14 +113,6 @@ export class GameScene extends Phaser.Scene {
         }
     }
 
-    inputFocused() {
-        document.getElementById('textInput').focus();
-    }
-
-    inputUnFocused() {
-        document.getElementById('textInput').blur();
-    }
-
     spawnRain() {
         const randIdx = Phaser.Math.Between(0, this.lyricsList.length - 1);
         
