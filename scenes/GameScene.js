@@ -82,6 +82,26 @@ export class GameScene extends Phaser.Scene {
                 this.nicknameText = this.add.text(250, 40, this.nickname, { fontFamily: "myfont", fontSize: '20px', fill: '#fff' });
                 this.scoreText = this.add.text(250, 60, '점수: 0', { fontFamily: "myfont", fontSize: '20px', fill: '#fff' });
                 this.healthText = this.add.text(250, 80, 'HP: 100', { fontFamily: "myfont", fontSize: '20px', fill: '#fff' });
+
+                // typingText 원래 y 저장 (키보드 대응용)
+                this.typingTextOriginalY = this.typingText.y;
+
+                // 키보드 이벤트: viewport 높이 변동 감지
+                this.lastViewportHeight = window.innerHeight;
+                const adjustTypingText = () => {
+                    const vh = window.innerHeight;
+                    const keyboardVisible = vh < this.lastViewportHeight;
+
+                    if (keyboardVisible) {
+                        this.typingText.setY(this.typingTextOriginalY - (this.lastViewportHeight - vh));
+                    } else {
+                        this.typingText.setY(this.typingTextOriginalY);
+                    }
+                    this.lastViewportHeight = vh;
+                };
+
+                window.addEventListener('resize', adjustTypingText);
+                adjustTypingText(); // 초기 실행
             }
         });
 
