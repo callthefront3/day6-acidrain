@@ -18,7 +18,6 @@ export class GameScene extends Phaser.Scene {
         this.spawnTimer = 0;
         this.levelTimer = 0;
 
-        this.typingText = null;
         this.nicknameText = null;
         this.scoreText = null;
         this.healthText = null;
@@ -46,10 +45,7 @@ export class GameScene extends Phaser.Scene {
         
         // 배경
         this.add.image(300, 400, 'background')
-                .setInteractive()
-                .on('pointerdown', () => {
-                    this.inputUnFocused();
-                });
+                .setInteractive();
 
         // 얼굴 스프라이트
         const portrait_key = 'face' + this.character;
@@ -74,34 +70,9 @@ export class GameScene extends Phaser.Scene {
                 families: ['myfont']
             },
             active: () => {
-                this.typingText = this.add.text(300, 700, '[         ]', { fontFamily: "myfont", fontSize: '40px', color: '#fff' }).setOrigin(0.5, 0.5);
-                this.typingText.setInteractive().on('pointerdown', () => {
-                    this.inputFocused();
-                });
-
                 this.nicknameText = this.add.text(250, 40, this.nickname, { fontFamily: "myfont", fontSize: '20px', fill: '#fff' });
                 this.scoreText = this.add.text(250, 60, '점수: 0', { fontFamily: "myfont", fontSize: '20px', fill: '#fff' });
                 this.healthText = this.add.text(250, 80, 'HP: 100', { fontFamily: "myfont", fontSize: '20px', fill: '#fff' });
-
-                // typingText 원래 y 저장 (키보드 대응용)
-                this.typingTextOriginalY = this.typingText.y;
-
-                // 키보드 이벤트: viewport 높이 변동 감지
-                this.lastViewportHeight = window.innerHeight;
-                const adjustTypingText = () => {
-                    const vh = window.innerHeight;
-                    const keyboardVisible = vh < this.lastViewportHeight;
-
-                    if (keyboardVisible) {
-                        this.typingText.setY(this.typingTextOriginalY - (this.lastViewportHeight - vh));
-                    } else {
-                        this.typingText.setY(this.typingTextOriginalY);
-                    }
-                    this.lastViewportHeight = vh;
-                };
-
-                window.addEventListener('resize', adjustTypingText);
-                adjustTypingText(); // 초기 실행
             }
         });
 
@@ -121,12 +92,6 @@ export class GameScene extends Phaser.Scene {
         this.spawnTimer += delta;
         this.levelTimer += delta;
 
-        if (this.typingText) {
-            this.typingText.setText(`[ ${this.textInput.value} ]`);
-        } else {
-            this.typingText.setText('[         ]');
-        }
-        
         const spawnLimit = Math.min(2 + this.level, 10);
 
         if (this.spawnTimer > 1000 && this.raindrops.getLength() < spawnLimit) {
@@ -150,12 +115,10 @@ export class GameScene extends Phaser.Scene {
 
     inputFocused() {
         document.getElementById('textInput').focus();
-        this.typingText.setStyle({ fontFamily: "myfont", fontSize: '40px', color: '#000', backgroundColor: '#fff' });
     }
 
     inputUnFocused() {
         document.getElementById('textInput').blur();
-        this.typingText.setStyle({ fontFamily: "myfont", fontSize: '40px', color: '#fff', backgroundColor: '' });
     }
 
     spawnRain() {
@@ -212,9 +175,6 @@ export class GameScene extends Phaser.Scene {
         }
 
         this.textInput.value = '';
-        if (this.typingText) {
-            this.typingText.setText('').setOrigin(0.5, 0.5);
-        }
         this.updateScoreAndHealth();
     }
 
