@@ -21,3 +21,14 @@ const config = {
 };
 
 new Phaser.Game(config);
+
+const input = document.getElementById('textInput');
+const canvas = document.querySelector('canvas');
+input.style.bottom = (window.innerHeight - canvas.getBoundingClientRect().bottom + 100) + "px";
+
+if (window.visualViewport) {
+  window.visualViewport.addEventListener("resize", () => {
+    const offsetBottom = window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop;
+    input.style.bottom = (20 + offsetBottom) + "px";
+  });
+}
