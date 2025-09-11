@@ -24,19 +24,30 @@ new Phaser.Game(config);
 
 const input = document.getElementById('textInput'); 
 const canvas = document.querySelector('canvas');
-input.style.bottom = (window.innerHeight - canvas.getBoundingClientRect().bottom + 150) + "px";
 
-if (window.visualViewport) {
-  let lastHeight = window.visualViewport.height; // 이전 높이 저장
+function updateInputPosition() {
+  const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+  const keyboardThreshold = window.innerHeight * 0.7; // 화면의 70% 이하로 줄어들면 키보드 등장으로 간주
 
-  window.visualViewport.addEventListener("resize", () => {
-    if (window.visualViewport.height < lastHeight) { // 작아짐 -> 키보드 등장
-        const offsetBottom = window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop;
-        input.style.bottom = (10 + offsetBottom) + "px";
-    } else { // 커짐 -> 키보드 사라짐
+  if (viewportHeight < keyboardThreshold) { // 키보드 등장
+      const offsetBottom = window.innerHeight - viewportHeight - (window.visualViewport?.offsetTop || 0);
+      input.style.bottom = (10 + offsetBottom) + "px";
+  } else { // 키보드 사라짐
+      if(input.getAttribute('maxlength')) {
         input.style.bottom = (window.innerHeight - canvas.getBoundingClientRect().bottom + 150) + "px";
-    }
+      } else {
+        input.style.bottom = (window.innerHeight - canvas.getBoundingClientRect().bottom + 50) + "px";
+      }
+  }
+}
 
-    lastHeight = window.visualViewport.height; // 최신 높이 저장
-  });
+// 초기 위치 설정
+updateInputPosition();
+
+// viewport가 변할 때마다 갱신
+if (window.visualViewport) {
+  window.visualViewport.addEventListener("resize", updateInputPosition);
+} else {
+  // visualViewport가 없으면 window resize로 대체
+  window.addEventListener("resize", updateInputPosition);
 }
